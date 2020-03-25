@@ -1,0 +1,587 @@
+@import "./meyer-reset.css";
+@import "./aria.css";
+
+
+/* General Setup */
+
+* {  
+    font-family: "Tahoma";
+    font-size: 20px;
+    /* width: auto;  NOTE! cannot use width auto here, oterwise SVG rectangles do not work*/
+    box-sizing: border-box;
+    margin-right: 0;
+    margin-left: 0;
+    line-height: 22px;
+}
+
+
+header, h1, footer, main, h2, h3, p, ul, a, article, div, section, form {
+    font-family: "Tahoma";
+    /* width: auto;  NOTE! cannot use width auto here, oterwise SVG rectangles do not work */
+    margin-right: 0;
+    margin-left: 0;
+}
+
+body {
+    background-color: #fcf7f8;
+}
+
+header {
+    text-align: center;    
+}
+
+/* !!! Need to check here - two blocks seem to target the same elements */
+.tab-div div {
+    font-size: 1.3vw;
+    height: 35px;
+    line-height: 35px;
+}
+
+.flowchart-tab {
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Graphics elements */
+
+/* For all graphics elements */
+
+svg {
+    background-color: #fcf7f8;
+    /* used if need to visualise full extent of svg */
+     /* background-color: lightblue; */
+}
+
+svg path,
+svg rect {
+    fill:#fcf7f8;
+    stroke: #000000;
+    stroke-width: 2;
+}
+
+svg g {
+    transform: scale(1.0) translate(10px, 10px);
+}
+
+
+svg text,
+svg tspan {
+    font-size: 14px;
+    fill: #17255a;
+    /* used to test if targeting is good */
+    /* fill: magenta; */
+}
+
+/* For all boxes */
+
+.box {
+    fill: #fcf7f8;
+}
+
+.plan-graphic,
+.pair-graphic,
+.tools-graphic,
+.activity-graphic {
+    width: 8vw;
+    background: transparent;
+}
+
+/* For specific tools-box only */
+
+.tools-box {
+    fill: #00e6e6;    
+}
+
+/* For extra shapes */
+
+#arrow-graphic g {
+    transform: translate(0,0);
+}
+
+#brace-graphic path {
+    fill: none;
+}
+
+/* End of graphics elements */
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #003399;
+    padding: 4px;
+}
+
+h2 {
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* !!! Not sure if there is an h3 - check */
+h3 {
+    text-align: center;
+}
+
+.flowchart-section p {
+    font-size: 1vw;
+    line-height: 1.1vw;
+    padding-top: 0.2vw;
+    color: #17255a;
+}
+
+/* The flowchart section with grids */
+
+/* Unusually for CSS, I am going to use indenting here, for elements of grids,
+   as I have several nested gids and this will make thing clearer. */
+
+article {
+    display: grid;
+    grid-template-columns: 9.5vw 9.5vw 40vw 30.5vw 9.5vw;
+    grid-template-rows: 48vw;
+    justify-items: space-around;
+    align-items: top;
+}
+
+    /* Elements of the top-level grid (sections) */
+
+    /* for all sections */
+
+    section {
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        justify-content: space-around;
+    }
+
+    /* for the section headings */
+
+    h2:first-child {
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: black;
+        border-bottom-width: 1px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    /* for individual elements (each of which has its own grid) */
+
+    section:nth-child(1) {
+        display: grid;
+        grid-template-columns: 90%;
+        grid-template-rows: 6vw auto;
+        justify-items: center;
+        align-items: start;
+    }
+
+        /* Only one column so individual elements line up without being directed */
+
+    section:nth-child(2) {
+        display: grid;
+        grid-template-columns: 90%;
+        grid-template-rows: 12.766% 14.894% 31.915% auto;
+        justify-items: center;
+        align-items: start;
+    }
+
+        /* Only one column so individual elements line up without being directed */
+
+    section:nth-child(3) {
+        display: grid;
+        grid-template-columns: 1fr 20% 1fr;
+        /* first row is collapsed */
+        grid-template-rows: 0vw 11.702% 0.887% auto;
+        justify-items: center;
+        justify-content: center;
+        align-items: start;
+    }
+
+        /* second-level grid (planning section) */
+
+        section:nth-child(3) > h2:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1 / span 3;
+        }
+
+        section:nth-child(3) > p:nth-child(2) {
+            grid-row: 2;
+            grid-column: 1 / span 1;
+        }
+
+        section:nth-child(3) > svg:nth-child(3) {
+            grid-row: 2;
+            grid-column: 2 / span 1;
+        }
+
+        /* Arrow */
+        section:nth-child(3) > svg:nth-child(4) {
+            grid-row: 3;
+            grid-column: 2 / span 1;
+            align-self: end;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        section:nth-child(3) > div:nth-child(5) {
+            /* styling as grid item */
+            grid-column: 1 / span 3;
+            grid-row: 4;
+            justify-self: stretch;
+            border-style: solid;
+            border-color: black;
+            border-width: 1px;
+            margin-right: 2.128%;
+            margin-bottom: 2.128%;
+            margin-left: 2.128%;
+            /* styling as container of next level grid */
+            display: grid;
+            grid-template-columns: repeat(8, calc( 100% / 8 ) );
+            grid-template-rows: auto 4.979% auto auto auto auto;
+            justify-items: center;
+            justify-content: space-around;
+            align-items: start;
+            align-content: start;
+        }
+
+            /* third-level grid (planning box) */
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(1) {
+                grid-row: 1;
+                grid-column: 1 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(2) {
+                grid-row: 1;
+                grid-column: 3 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(3) {
+                grid-row: 1;
+                grid-column: 5 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(4) {
+                grid-row: 1;
+                grid-column: 7 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(5) {
+                /* Brace graphic */
+                grid-row: 2;
+                grid-column: 2 / span 4;
+                justify-self: stretch;
+                align-self: end;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(6) {
+                grid-row: 3;
+                grid-column: 2 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(7) {
+                grid-row: 3;
+                grid-column: 4 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(8) {
+                grid-row: 3;
+                grid-column: 6 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(9) {
+                grid-row: 4;
+                grid-column: 2 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(10) {
+                grid-row: 4;
+                grid-column: 4 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(11) {
+                grid-row: 4;
+                grid-column: 6 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(12) {
+                grid-row: 5;
+                grid-column: 4 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(13) {
+                grid-row: 6;
+                grid-column: 2 / span 2;
+            }
+
+            section:nth-child(3) > div:nth-child(5) > svg:nth-child(14) {
+                grid-row: 6;
+                grid-column: 6 / span 2;
+            }
+            
+            /* End third-level grid (planning box) */
+
+        /* End second-level grid (planning section) */
+
+        /* Second-level grid (execution section) */
+
+        section:nth-child(4) {
+            display: grid;
+            grid-template-columns: 1fr 33% 1fr;
+            grid-template-rows: 0 4.255% 11.702% auto;
+            justify-items: center;
+        }
+
+        section:nth-child(4) > h2:nth-child(1) {
+            grid-row: 1;
+            grid-column: 1 / span 3;
+        }
+
+        section:nth-child(4) > p:nth-child(2) {
+            grid-row: 2;
+            grid-column: 1 / span 3;
+        }
+
+        section:nth-child(4) > svg:nth-child(3) {
+            grid-row: 3;
+            grid-column: 2;
+        }
+
+        section:nth-child(4) > div:nth-child(4) {
+            /* styling as grid item */
+            grid-row: 4;
+            grid-column: 1 / span 3;
+            justify-self: stretch;
+            border-style: solid;
+            border-color: black;
+            border-width: 1px;
+            border-radius: 30px;
+            margin-top: 2.128%;
+            margin-right: 2.128%;
+            margin-bottom: 2.128%;
+            margin-left: 2.128%;
+            /* styling as container of next level grid */
+            display: grid;
+            grid-template-columns: repeat(3, calc( 100% / 3 ) );
+            grid-template-rows: auto auto auto auto auto auto auto;
+            justify-items: center;
+            justify-content: space-around;
+            align-items: start;
+            align-content: space-around;
+        }
+
+            /* Third-level grid (execution box) */
+
+            section:nth-child(4) > div:nth-child(4) > h3:nth-child(1) {
+                grid-row: 1;
+                grid-column: 1 / span 3;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(2) {
+                grid-row: 2;
+                grid-column: 1;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(3) {
+                grid-row: 2;
+                grid-column: 3;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(4) {
+                grid-row: 3;
+                grid-column: 2;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(5) {
+                grid-row: 4;
+                grid-column: 1;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(6) {
+                grid-row: 4;
+                grid-column: 2;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(7) {
+                grid-row: 4;
+                grid-column: 3;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(8) {
+                grid-row: 5;
+                grid-column: 1;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(9) {
+                grid-row: 5;
+                grid-column: 2;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(10) {
+                grid-row: 6;
+                grid-column: 2;
+            }
+
+            section:nth-child(4) > div:nth-child(4) > svg:nth-child(11) {
+                grid-row: 7;
+                grid-column: 3;
+            }
+
+            /* End third-level grid (execution box) */
+
+    section:nth-child(5) {
+        display: grid;
+        grid-template-columns: 90%;
+        grid-template-rows: 8.51% 13.83% 13.83% 18.09% 12.766% 12.766% 12.766%;
+        justify-items: center;
+        justify-content: center;
+        align-items: start;
+    }
+
+        /* Only one column so individual elements line up without being directed */
+
+    /* End second-level grid
+
+/* End top-level grid */
+
+
+/* Because this application is principally targeted as a desktop product,
+   strict "mobile first" approach was not taken here.
+   However mobile support is included and set up in this section */
+@media screen and (max-width: 768px) {
+
+    /* Add styling for clickable boxes along top for mobile */
+
+    /* Styling for expanding grid adapted from: w3schools How TO - Expanding Grid
+       https://www.w3schools.com/howto/howto_js_expanding_grid.asp */
+
+    .tab-div {
+        display: grid;
+        grid-template-columns: repeat(5, 19.5vw);
+        grid-template-rows: 35px 5px;
+        justify-items: stretch;
+        justify-content: stretch;
+        align-content: stretch;
+        align-items: stretch;
+    }
+
+    .flowchart-tab {
+        border: black;
+        border-width: 1px;
+        border-top-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+        border-left-style: solid;
+        background-color: #c0c6d0;
+        /* background-color: magenta; */
+        cursor: pointer;
+    }
+
+    .flowchart-tab p {
+        margin-left: 0;
+        margin-right: 0;
+        padding-top: 7.5px;
+        padding-right: 4px;
+        padding-bottom: 7.5px;
+        padding-left: 4px;
+        text-align: center;
+        font-size: 20px;
+        line-height: 20px;        
+        color: #003399;
+        /* color: magenta; */
+    }
+
+    #preproject-tab {
+        background-color: #fcf7f8;
+        border-bottom: none;
+    }
+
+    .plan-graphic,
+    .pair-graphic,
+    .tools-graphic,
+    .activity-graphic {
+        width: 19.8vw;
+    }
+
+    article {
+        grid-template-rows: 118.5vw;
+    }
+    
+    .flowchart-section {
+        display: none;
+    }
+
+    #preproject-section {
+        display: grid;
+    }
+
+    .flowchart-section p {
+        font-size: 2.475vw;
+        line-height: 2.723vw;
+        padding-top: 0.495vw;
+    }
+
+}
+
+
+/* Desktop */
+@media screen and (min-width: 768px) {
+
+    .tab-div {
+        display: grid;
+        grid-template-columns: 9.5vw 9.5vw 40vw 30.5vw 9.5vw;
+    }
+
+    .flowchart-section {
+        display: grid;
+    }
+
+    .flowchart-tab {
+        background-color: #fcf7f8;
+        border-bottom-style: solid;
+        color: #003399;
+        border: black;
+        border-width: 1px;
+        border-top-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+        border-left-style: solid;       
+    }
+
+}
+
+popupboxes
+.popup {
+    position: fixed;
+    position: fixed;
+    height:100px;
+    bottom: 50vh;
+    bottom: 50vh;
+    left: 50vw;
+    left: 50vw;
+    z-index: 2;
+    z-index: 2;
+    background-color: salmon;
+    background-color: salmon;
+    border: solid;
+    border: solid;
+}
+}
+.salmon-background {
+.salmon-background {
+    background-color: salmon;
+    background-color: salmon;
+}
+}
+.popup-visible {
+.popup-visible {
+    display: block;
+    display: block;
+}
+}
+.popup-hidden {
+.popup-hidden {
+    display: none;
+    display: none;
+}
+} 
